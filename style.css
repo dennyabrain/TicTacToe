@@ -1,0 +1,33 @@
+body{
+	background-color : #594736;
+}
+
+#content{
+	width : 50%;
+	height :80%;
+	background-color : #F2F2F2;
+	margin: 0 auto;
+}
+
+.row{
+	width :80%;
+	background-color: #F2D95C;
+	margin : 0 auto;
+	padding : 2%;
+}
+.col1, .col2, .col3{
+	display: inline-block;
+	width : 20%;
+	background-color : white;
+	padding : 5%;
+	text-align : center;
+	border-style:dotted;
+	border-color:#F22E52;
+	margin-bottom:0px;
+}
+
+red - F22E52
+white - F2F2F2
+yellow - F2D95C
+brown - 594736
+darkbrown - 261B14
