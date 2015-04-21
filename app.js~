@@ -57,10 +57,10 @@ window.onload = function(){
 		var win=checkProspectiveWinner();
 		console.log(win);
 		if(win.winner == 0){//making winning move
-			findSpaceAndInsert0(win.index);
+			findSpaceAndInsert0(winner.index);
 		}
 		if(win.winner == 1){//block X's winning move
-			findSpaceAndInsert0(win.index);
+			findSpaceAndInsert0(winner.index);
 		}
 		else{
 			var move = intelligentMove();
