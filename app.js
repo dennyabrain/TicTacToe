@@ -1,7 +1,18 @@
+/*
+The Code for Tic-Tac-Toe
+the code follows the following logic
+1) Player makes a move
+2) Computer checks if its winning in the next move. If yes, plays the winning move and exits else goes to step 3.
+3) Computer check if the player is winning in the next move. If yes then plays a blocking move and then continues the game.
+4) If neither is winning, the computer plays an 'Intelligent move' which I defined as making a mark in a path that has most number of blank spaces
+*/
+
 window.onload = function(){
 	//data sctructures for the game
 	var game=[[0,0,0],[0,0,0],[0,0,0]];
 	var PoLR=[0,0,0,0,0,0,0,0]; //Path of least resistance
+	var computerScore = 0;
+	var playerScore = 0;
 
 	//Click handlers
 	for(i=0;i<3;i++){
@@ -28,36 +39,18 @@ window.onload = function(){
 					game[i][j]=1;
 					document.getElementById(id).innerHTML='X';
 					//console.log(getWinner());
-					if(getWinner()==1 || getWinner()==2){
-						alert('Your winner is Player ' + getWinner());
-						location.reload();
-					}
-					if(game[0][0]!==0&&game[0][1]!==0&&game[0][2]!==0&&game[1][0]!==0&&game[1][1]!==0&&game[1][2]!==0&&game[2][0]!==0&&game[2][1]!==0&&game[2][2]!==0){
-						alert('game is tied');
-						location.reload();
-					}
+					checkState();
 
 					computerMove();
 					
-					if(getWinner()==1 || getWinner()==2){
-						alert('Your winner is Player ' + getWinner());
-						location.reload();
-					}
-					if(game[0][0]!==0&&game[0][1]!==0&&game[0][2]!==0&&game[1][0]!==0&&game[1][1]!==0&&game[1][2]!==0&&game[2][0]!==0&&game[2][1]!==0&&game[2][2]!==0){
-						alert('game is tied');
-						location.reload();
-					}
+					checkState();
+					
 				}
 	}
 
 	function computerMove(){
 		getPoLR();
-		//console.log('PoLR before computer move');
-		//console.log(PoLR);
-		//console.log('prospective winner');
 		var win=checkProspectiveWinner();
-		//console.log(win);
-
 
 		for(i=0;i<win.length;i++){
 			if(win[i].winner==0){//make winning move
@@ -394,7 +387,42 @@ window.onload = function(){
 		
 	}
 
+	function resetGame(){
+		for(i=0;i<3;i++){
+			for(j=0;j<3;j++){
+				game[i][j]=0;
+				var id=''+i+''+j;
+				document.getElementById(id).innerHTML='';
+			}
+		}
 	
+		for(i=0;i<PoLR.length;i++){
+			PoLR[i]=0;
+		}
+	}
+
+	function checkState(){
+		if(getWinner()==1 || getWinner()==2){
+			alert('Your winner is Player ' + getWinner());
+						//location.reload();
+			if(getWinner()==1){
+				playerScore++;
+				document.getElementById('playerScore').innerHTML=playerScore;
+			}
+			if(getWinner()==2){
+				computerScore++;
+				document.getElementById('computerScore').innerHTML=computerScore;
+			}
+			resetGame();
+		}
+		if(game[0][0]!==0&&game[0][1]!==0&&game[0][2]!==0&&game[1][0]!==0&&game[1][1]!==0&&game[1][2]!==0&&game[2][0]!==0&&game[2][1]!==0&&game[2][2]!==0){
+			alert('game is tied');
+			//location.reload();
+			resetGame();
+		}
+	}
 }
+
+
 
 

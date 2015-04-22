@@ -38,3 +38,11 @@ h1{
 	margin-left:-10px;
 	padding-top :30px;
 }
+
+.score, #playerScore, #computerScore{
+	display:inline-block;
+}
+
+#playerScore, #computerScore{
+	padding-right:40px;
+}
