@@ -1,5 +1,6 @@
 body{
 	background-color : #F0F2F2;
+	color : #59564F;
 }
 
 #content{
@@ -7,6 +8,7 @@ body{
 	height :80%;
 	background-color : #F0F2F2;
 	margin: 0 auto;
+	margin-top : 100px;
 }
 
 .row{
@@ -24,12 +26,15 @@ body{
 	margin : 0 0 0 0;
 	text-align : center;
 	border-style:dotted;
-	border-color:#F22E52;
+	border-color:#91A9D9;
 	font-size:50px;
 	vertical-align: middle;
+	margin-top:-30px;
+	margin-left:-10px;
+	padding-top :30px;
 }
 
-#00, #01, #02{
+#00{
 	boder-top :none;
 }
 
