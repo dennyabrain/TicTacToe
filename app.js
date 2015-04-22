@@ -34,16 +34,42 @@ window.onload = function(){
 		var i=id[0]
 		var j=id[1]
 		//console.log('index ' + i + ' ' + j);
-		
+		console.log('gamestate : ');
+		console.log(game);
+		console.log(i+''+j);
 				if(game[i][j]==0){ //check to see if the box is empty
 					game[i][j]=1;
 					document.getElementById(id).innerHTML='X';
-					computerMove();
 					//console.log(getWinner());
 					if(getWinner()==1 || getWinner()==2){
 						alert('Your winner is Player ' + getWinner());
 						location.reload();
 					}
+					if(game[0][0]!==0&&game[0][1]!==0&&game[0][2]!==0&&game[1][0]!==0&&game[1][1]!==0&&game[1][2]!==0&&game[2][0]!==0&&game[2][1]!==0&&game[2][2]!==0){
+						alert('game is tied');
+						location.reload();
+					}
+					computerMove();
+					
+					if(getWinner()==1 || getWinner()==2){
+						alert('Your winner is Player ' + getWinner());
+						location.reload();
+					}
+					if(game[0][0]!==0&&game[0][1]!==0&&game[0][2]!==0&&game[1][0]!==0&&game[1][1]!==0&&game[1][2]!==0&&game[2][0]!==0&&game[2][1]!==0&&game[2][2]!==0){
+						alert('game is tied');
+						location.reload();
+					}
+
+					
+					/*for(i=0;i<3;i++){
+						for(j=0;j<3;j++){
+							if(game[i][j]==0){
+								return;
+							}
+						}
+					}
+
+					return;*/
 					
 					//return;
 				}
@@ -52,11 +78,40 @@ window.onload = function(){
 
 	function computerMove(){
 		getPoLR();
-		console.log(PoLR);
-		console.log('prospective winner');
+		//console.log('PoLR before computer move');
+		//console.log(PoLR);
+		//console.log('prospective winner');
 		var win=checkProspectiveWinner();
-		console.log(win);
-		if(win.winner == 0){//making winning move
+		//console.log(win);
+
+
+		for(i=0;i<win.length;i++){
+			if(win[i].winner==0){//make winning move
+				findSpaceAndInsert0(win[i].index);
+				console.log('------');
+				return;
+			}
+		}
+
+		for(i=0;i<win.length;i++){
+			if(win[i].winner==1){//block X's winning move
+				findSpaceAndInsert0(win[i].index);
+				console.log('------');
+				return;
+			}
+		}
+
+		for(i=0;i<win.length;i++){
+			if(win[i].winner==-1){//make intelligent move
+				var move = intelligentMove();
+				insertO(move);
+				console.log('------');
+				return;
+			}
+		}
+
+
+		/*if(win.winner == 0){//making winning move
 			findSpaceAndInsert0(win.index);
 		}
 		if(win.winner == 1){//block X's winning move
@@ -66,68 +121,84 @@ window.onload = function(){
 			var move = intelligentMove();
 			insertO(move);
 		}
-		//var move = intelligentMove();
-		//insertO(move);
+		getPoLR();
+		console.log('PoLR after computer move');
+		console.log(PoLR);
+		console.log('------');	*/
+		var move = intelligentMove();
+		insertO(move);
 	}
 
 	function checkProspectiveWinner(){
+			var win =[];
 			if(PoLR[0]==1){
 				if(game[0][0]==1 && game[1][0]==1 || game[1][0]==1 && game[2][0]==1 || game[0][0]==1 && game[2][0]==1){
-						return{winner:1,index:0};
-				}else if(game[0][0]==0 && game[1][0]==0 || game[1][0]==0 && game[2][0]==0 || game[0][0]==0 && game[2][0]==0){
-						return{winner:0,index:0};  
+						win.push({winner:1,index:0});
+				}
+				if(game[0][0]==2 && game[1][0]==2 || game[1][0]==2 && game[2][0]==2 || game[0][0]==2 && game[2][0]==2){
+						win.push({winner:0,index:0});  
 				}
 			}
 			if(PoLR[1]==1){
 				if(game[0][1]==1 && game[1][1]==1 || game[1][1]==1 && game[2][1]==1 || game[0][1]==1 && game[2][1]==1){
-						return {winner:1,index:1};
-				}else if(game[0][1]==0 && game[1][1]==0 || game[1][1]==0 && game[2][1]==0 || game[0][1]==0 && game[2][1]==0){
-						return {winner:0,index:1};
+						win.push({winner:1,index:1});
+				}
+				if(game[0][1]==2 && game[1][1]==2 || game[1][1]==2 && game[2][1]==2 || game[0][1]==2 && game[2][1]==2){
+						win.push({winner:0,index:1});
 				}
 			}
 			if(PoLR[2]==1){
 				if(game[0][2]==1 && game[1][2]==1 || game[1][2]==1 && game[2][2]==1 || game[0][2]==1 && game[2][2]==1){
-						return  {winner:1,index:2};
-				}else if(game[0][2]==0 && game[1][2]==0 || game[1][2]==0 && game[2][2]==0 || game[0][2]==0 && game[2][2]==0){
-						return {winner:0,index:2};
+						win.push({winner:1,index:2});
+				}
+				if(game[0][2]==2 && game[1][2]==2 || game[1][2]==2 && game[2][2]==2 || game[0][2]==2 && game[2][2]==2){
+						win.push({winner:0,index:2});
 				}
 			}
 			if(PoLR[3]==1){
 				if(game[0][0]==1 && game[0][1]==1 || game[0][1]==1 && game[0][2]==1 || game[0][0]==1 && game[0][2]==1){
-						return {winner:1,index:3};
-				}else if(game[0][0]==0 && game[0][1]==0 || game[0][1]==0 && game[0][2]==0 || game[0][0]==0 && game[0][2]==0){
-						return {winner:0,index:3};
+						win.push({winner:1,index:3});
+				}
+				if(game[0][0]==2 && game[0][1]==2 || game[0][1]==2 && game[0][2]==2 || game[0][0]==2 && game[0][2]==2){
+						win.push({winner:0,index:3});
 				}
 			}
 			if(PoLR[4]==1){
 				if(game[1][0]==1 && game[1][1]==1 || game[1][1]==1 && game[1][2]==1 || game[1][0]==1 && game[1][2]==1){
-						return {winner:1,index:4};
-				}else if(game[1][0]==0 && game[1][1]==0 || game[1][1]==0 && game[1][2]==0 || game[1][0]==0 && game[1][2]==0){
-						return {winner:0,index:4};
+						win.push({winner:1,index:4});
+				}
+				if(game[1][0]==2 && game[1][1]==2 || game[1][1]==2 && game[1][2]==2 || game[1][0]==2 && game[1][2]==2){
+						win.push({winner:0,index:4});
 				}
 			}
 			if(PoLR[5]==1){
 				if(game[2][0]==1 && game[2][1]==1 || game[2][1]==1 && game[2][2]==1 || game[2][0]==1 && game[2][2]==1){
-						return {winner:1,index:5};
-				}else if(game[2][0]==0 && game[2][1]==0 || game[2][1]==0 && game[2][2]==0 || game[2][0]==0 && game[2][2]==0){
-						return {winner:0,index:5};
+						win.push({winner:1,index:5});
+				}
+				if(game[2][0]==2 && game[2][1]==2 || game[2][1]==2 && game[2][2]==2 || game[2][0]==2 && game[2][2]==2){
+						win.push({winner:0,index:5});
 				}
 			}
 			if(PoLR[6]==1){
 				if(game[0][0]==1 && game[1][1]==1 || game[1][1]==1 && game[2][2]==1 || game[0][0]==1 && game[2][2]==1){
-						return {winner:1,index:6};
-				}else if(game[0][0]==0 && game[1][1]==0 || game[1][1]==0 && game[2][2]==0 || game[0][0]==0 && game[2][2]==0){
-						return {winner:0,index:6};
+						win.push({winner:1,index:6});
+				}
+				if(game[0][0]==2 && game[1][1]==2 || game[1][1]==2 && game[2][2]==2 || game[0][0]==2 && game[2][2]==2){
+						win.push({winner:0,index:6});
 				}
 			}
 			if(PoLR[7]==1){
 				if(game[0][2]==1 && game[1][1]==1 || game[1][1]==1 && game[2][0]==1 || game[0][2]==1 && game[2][0]==1){
-						return {winner:1,index:7};
-				}else if(game[0][2]==0 && game[1][1]==0 || game[1][1]==0 && game[2][0]==0 || game[0][2]==0 && game[2][0]==0){
-						return {winner:0,index:7};
+						win.push({winner:1,index:7});
+				}
+				if(game[0][2]==2 && game[1][1]==2 || game[1][1]==2 && game[2][0]==2 || game[0][2]==2 && game[2][0]==2){
+						win.push({winner:0,index:7});
 				}
 			}
-			return{winner:2,index:-1};
+			else{
+				win.push({winner:2,index:-1});
+			}
+			return win;
 	}
 
 	function getWinner(){
@@ -169,6 +240,7 @@ window.onload = function(){
 	}
 
 	function intelligentMove(){
+		console.log(PoLR);
 		var val=Math.max.apply(Math,PoLR);
 		//console.log(val);
 		var index=PoLR.indexOf(val);
@@ -177,7 +249,12 @@ window.onload = function(){
 	}
 
 	function insertO(indPoLR){
-		console.log('gotta insert 0');
+		//console.log('gotta insert 0');
+		//debugger;
+		if(PoLR[indPoLR]==0){
+			console.log('Restart');
+			location.reload();
+		}
 		switch(indPoLR){
 			case 0:
 				while(1){
@@ -290,72 +367,72 @@ window.onload = function(){
 		if(index==0){
 				for(i=0;i<3;i++){
 					if(game[i][0]==0){
-							game[i][0]==2;
+							game[i][0]=2;
 							var id =''+i+''+0;
-							document.getElementById(id).innerHTML='0';
+							document.getElementById(id).innerHTML='O';
 					}
 				}
 		}
 		if(index==1){
 				for(i=0;i<3;i++){
 					if(game[i][1]==0){
-							game[i][1]==2;
+							game[i][1]=2;
 							var id =''+i+''+1;
-							document.getElementById(id).innerHTML='0';
+							document.getElementById(id).innerHTML='O';
 					}
 				}
 		}
 		if(index==2){
 				for(i=0;i<3;i++){
 					if(game[i][2]==0){
-							game[i][2]==2;
+							game[i][2]=2;
 							var id =''+i+''+2;
-							document.getElementById(id).innerHTML='0';
+							document.getElementById(id).innerHTML='O';
 					}
 				}
 		}
 		if(index==3){
 				for(i=0;i<3;i++){
 					if(game[0][i]==0){
-							game[0][i]==2;
+							game[0][i]=2;
 							var id =''+0+''+i;
-							document.getElementById(id).innerHTML='0';
+							document.getElementById(id).innerHTML='O';
 					}
 				}
 		}
 		if(index==4){
 				for(i=0;i<3;i++){
 					if(game[1][i]==0){
-							game[1][i]==2;
+							game[1][i]=2;
 							var id =''+1+''+i;
-							document.getElementById(id).innerHTML='0';
+							document.getElementById(id).innerHTML='O';
 					}
 				}
 		}
 		if(index==5){
 				for(i=0;i<3;i++){
 					if(game[2][i]==0){
-							game[2][i]==2;
+							game[2][i]=2;
 							var id =''+2+''+i;
-							document.getElementById(id).innerHTML='0';
+							document.getElementById(id).innerHTML='O';
 					}
 				}
 		}
 		if(index==6){
 				for(i=0;i<3;i++){
 					if(game[i][i]==0){
-							game[i][i]==2;
+							game[i][i]=2;
 							var id =''+i+''+i;
-							document.getElementById(id).innerHTML='0';
+							document.getElementById(id).innerHTML='O';
 					}
 				}
 		}
 		if(index==7){
 				for(i=0;i<3;i++){
 					if(game[2-i][i]==0){
-							game[2-i][i]==2;
+							game[2-i][i]=2;
 							var id =''+(2-i)+''+i;
-							document.getElementById(id).innerHTML='0';
+							document.getElementById(id).innerHTML='O';
 					}
 				}
 		}
