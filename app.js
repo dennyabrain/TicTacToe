@@ -28,6 +28,7 @@ window.onload = function(){
 		}
 	}	
 
+	//Draws the X when user clicks on an empty box, this also initializes the computer's move
 	function drawX(id){
 		var i=id[0]
 		var j=id[1]
@@ -39,15 +40,19 @@ window.onload = function(){
 					game[i][j]=1;
 					document.getElementById(id).innerHTML='X';
 					//console.log(getWinner());
-					checkState();
+					checkState(); // checks whether the game is over or not after Human Player's move
 
 					computerMove();
 					
-					checkState();
+					checkState(); // checks whether the game is over or not after computer's move
 					
 				}
 	}
 
+	/*This is the function that takes care of the computer's move
+	//checkProspectiveWinner() see if any player is winning in their next move. If that player is computer, then it finishes the winning move
+	//if that player is the human then it blocks the move, else it just plays an intelligent move.
+	*/
 	function computerMove(){
 		getPoLR();
 		var win=checkProspectiveWinner();
@@ -81,6 +86,7 @@ window.onload = function(){
 		insertO(move);
 	}
 
+	//This function checks if either of the players are winning the game in their next move.
 	function checkProspectiveWinner(){
 			var win =[];
 			if(PoLR[0]==1){
@@ -153,6 +159,7 @@ window.onload = function(){
 			return win;
 	}
 
+	//This function returns who the winner of the game is 2 = game can still continue, 1 = X wins the game, 0 = O wins the game
 	function getWinner(){
 		//console.log('computing winner');
 		for(i=0;i<3;i++){
@@ -170,6 +177,7 @@ window.onload = function(){
 		if(game[0][2] && game[0][2]==game[1][1] && game[1][1]==game[2][0]){return game[0][2]}
 	}
 
+	// I define PoLR as the Path of least resistance. It is a count of all the empty spaces on the board at any moment and this function computes that.
 	function getPoLR(){
 		PoLR=[0,0,0,0,0,0,0,0];
 		for(i=0;i<3;i++){
@@ -191,6 +199,7 @@ window.onload = function(){
 		if(game[2][0]==0) PoLR[7]++;
 	}
 
+	//INtelligent move is defined as a move in a path that has the maximum number of 0s
 	function intelligentMove(){
 		console.log(PoLR);
 		var val=Math.max.apply(Math,PoLR);
@@ -200,6 +209,7 @@ window.onload = function(){
 		return index;
 	}
 
+	//This inserts 0 randomly into one of the empty spots.
 	function insertO(indPoLR){
 		//console.log('gotta insert 0');
 		//debugger;
@@ -310,7 +320,7 @@ window.onload = function(){
 				break;
 		}
 	}
-
+	//This inserts 0 in the last empty spot of the given PoLR
 	function findSpaceAndInsert0(index){
 		if(index==0){
 				for(i=0;i<3;i++){
