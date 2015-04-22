@@ -1,6 +1,11 @@
 body{
 	background-color : #F0F2F2;
 	color : #59564F;
+	text-align: center;
+}
+
+h1{
+	font-size: 2.2em;
 }
 
 #content{
@@ -8,7 +13,7 @@ body{
 	height :80%;
 	background-color : #F0F2F2;
 	margin: 0 auto;
-	margin-top : 100px;
+	margin-top : 5%;
 }
 
 .row{
@@ -33,13 +38,3 @@ body{
 	margin-left:-10px;
 	padding-top :30px;
 }
-
-#00{
-	boder-top :none;
-}
-
-red - F22E52
-white - F2F2F2
-yellow - F2D95C
-brown - 594736
-darkbrown - 261B14
