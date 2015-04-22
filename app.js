@@ -251,10 +251,6 @@ window.onload = function(){
 	function insertO(indPoLR){
 		//console.log('gotta insert 0');
 		//debugger;
-		if(PoLR[indPoLR]==0){
-			console.log('Restart');
-			location.reload();
-		}
 		switch(indPoLR){
 			case 0:
 				while(1){
