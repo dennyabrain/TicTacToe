@@ -3,19 +3,6 @@ window.onload = function(){
 	var game=[[0,0,0],[0,0,0],[0,0,0]];
 	var PoLR=[0,0,0,0,0,0,0,0]; //Path of least resistance
 
-	//console.log(getWinner());
-	getPoLR();
-	console.log(PoLR);
-	function printArray(){
-		console.log("======");
-		console.log('- ' + game[0][0] + ' - ' + game[0][1] + ' - ' + game[0][2]);
-		console.log('- ' + game[1][0] + ' - ' + game[1][1] + ' - ' + game[1][2]);
-		console.log('- ' + game[2][0] + ' - ' + game[2][1] + ' - ' + game[2][2]);
-		console.log("======");
-	}
-
-	//printArray();
-
 	//Click handlers
 	for(i=0;i<3;i++){
 		for(j=0;j<3;j++){
@@ -49,6 +36,7 @@ window.onload = function(){
 						alert('game is tied');
 						location.reload();
 					}
+
 					computerMove();
 					
 					if(getWinner()==1 || getWinner()==2){
@@ -59,21 +47,7 @@ window.onload = function(){
 						alert('game is tied');
 						location.reload();
 					}
-
-					
-					/*for(i=0;i<3;i++){
-						for(j=0;j<3;j++){
-							if(game[i][j]==0){
-								return;
-							}
-						}
-					}
-
-					return;*/
-					
-					//return;
 				}
-		//document.getElementById(id).innerHTML='X';
 	}
 
 	function computerMove(){
@@ -110,21 +84,6 @@ window.onload = function(){
 			}
 		}
 
-
-		/*if(win.winner == 0){//making winning move
-			findSpaceAndInsert0(win.index);
-		}
-		if(win.winner == 1){//block X's winning move
-			findSpaceAndInsert0(win.index);
-		}
-		else{
-			var move = intelligentMove();
-			insertO(move);
-		}
-		getPoLR();
-		console.log('PoLR after computer move');
-		console.log(PoLR);
-		console.log('------');	*/
 		var move = intelligentMove();
 		insertO(move);
 	}
